@@ -19,8 +19,9 @@
                             placeholder="username"
                             id="usernameField" 
                             class="form-control form-control-sm"
+                            required
                         />
-                        <div class="invalid-username" style="display: none"></div>
+                        <div class="invalid-username text-danger" style="display: none"></div>
                         <p class="text-sm text-success usernameSuccessOutput"></p>
                     
 
@@ -32,9 +33,10 @@
                             placeholder="example@gmail.com"
                             id="emailField" 
                             class="form-control form-control-sm"
+                            required
                         />
                     </div>
-                    <div class="invalid-email" style="display: none"></div>
+                    <div class="invalid-email text-danger" style="display: none"></div>
                     <p class="text-sm text-success emailSuccessOutput"></p>
                     <div class="form-group mt-2">
                         <input 
@@ -43,6 +45,7 @@
                             placeholder="Password"
                             id="passwordField" 
                             class="form-control form-control-sm"
+                            required
                         />
                         <div class="text-end py-3">Show</div>
                     </div>      
