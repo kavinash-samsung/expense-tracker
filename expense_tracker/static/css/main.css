@@ -11,3 +11,14 @@
       font-size: 3.5rem;
     }
   }
+
+.showPasswordToggle{
+  cursor: pointer;
+  transition: all;
+  
+  padding: 7px 15px;
+}
+
+.showPasswordToggle:hover {
+  transform: scale(1.2,1.2);
+}

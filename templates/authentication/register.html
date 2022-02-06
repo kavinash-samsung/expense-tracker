@@ -11,7 +11,11 @@
                 <div class="card-title">
                     <h4>Register for a free account</h4>
                 </div>   
-                <form action="" method="post">
+                <form action="{% url 'register' %}" method="post">
+                    {% csrf_token %}
+
+                    {% include "partials/_messages.html" %}
+
                     <div class="form-group mt-2">
                         <input 
                             type="text" 
@@ -19,37 +23,40 @@
                             placeholder="username"
                             id="usernameField" 
                             class="form-control form-control-sm"
+                            value = "{{fieldValues.username}}"
                             required
-                        />
-                        <div class="invalid-username text-danger" style="display: none"></div>
-                        <p class="text-sm text-success usernameSuccessOutput"></p>
-                    
-
-                    </div>
-                    <div class="form-group mt-2">
-                        <input 
+                            />
+                            <div class="invalid-username text-danger" style="display: none"></div>
+                            <p class="text-sm text-success usernameSuccessOutput"></p>
+                            
+                            
+                        </div>
+                        <div class="form-group mt-2">
+                            <input 
                             type="email" 
                             name="email" 
                             placeholder="example@gmail.com"
                             id="emailField" 
                             class="form-control form-control-sm"
+                            value = "{{fieldValues.email}}"
                             required
+                            />
+                        </div>
+                        <div class="invalid-email text-danger" style="display: none"></div>
+                        <p class="text-sm text-success emailSuccessOutput"></p>
+                        <div class="form-group mt-2">
+                            <input 
+                        type="password" 
+                        name="password" 
+                        placeholder="Password"
+                        id="passwordField" 
+                        class="form-control form-control-sm"
+                        value = ""
+                        required
                         />
-                    </div>
-                    <div class="invalid-email text-danger" style="display: none"></div>
-                    <p class="text-sm text-success emailSuccessOutput"></p>
-                    <div class="form-group mt-2">
-                        <input 
-                            type="password" 
-                            name="password" 
-                            placeholder="Password"
-                            id="passwordField" 
-                            class="form-control form-control-sm"
-                            required
-                        />
-                        <div class="text-end py-3">Show</div>
+                        <div class="text-end py-3"><small class="showPasswordToggle float-right btn btn-outline-info">Show</small></div>
                     </div>      
-                    <input type="submit" value="Register" class="btn btn-block btn-primary"/> 
+                    <input type="submit" value="Register" class="btn btn-block btn-primary submit-button"/> 
                 </form>
             </div>    
         </div>
