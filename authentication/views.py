@@ -21,9 +21,15 @@ from .utils import token_generator
 from django.contrib import auth
 
 # Create your views here.
+def userAlreadyAuthenticated(user):
+    if user.is_authenticated:
+        return True
+    return False
 
 class RegistrationView(View):
     def get(self, request):
+        if userAlreadyAuthenticated(request.user):
+            return redirect("expenses")
         return render(request, "authentication/register.html")
     
     def post(self, request):
@@ -37,7 +43,7 @@ class RegistrationView(View):
             if not User.objects.filter(email=email).exists():
 
                 if len(password)<6:
-                    messages.error(request, "Password is too short")
+                    messages.error(request, "Password must contain minimum 6 character")
                     return render(request, "authentication/register.html", context)
                 user = User.objects.create_user(username=username, email = email)
                 user.set_password(password)
@@ -81,6 +87,8 @@ class VerificationView(View):
 
 class LoginView(View):
     def get(self, request):
+        if userAlreadyAuthenticated(request.user):
+            return redirect("expenses")
         return render(request, "authentication/login.html")
 
     def post(self, request):
@@ -116,7 +124,7 @@ class LogoutView(View):
 class UsernameValidationView(View):
     def post(self, request):
         data = json.loads(request.body)
-        username = data["username"]
+        username = data["username"].lower()
 
         if not str(username).isalnum() or username.isnumeric():
             return JsonResponse({'username_error':"Username should be alphanumeric"}, status=400)
@@ -129,7 +137,7 @@ class UsernameValidationView(View):
 class EmailValidationView(View):
     def post(self, request):
         data = json.loads(request.body)
-        email = data["email"]
+        email = data["email"].lower()
 
         if not validate_email(email):
             return JsonResponse({'email_error':"Email format incorrect"}, status=400)

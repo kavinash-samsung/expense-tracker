@@ -11,53 +11,58 @@
                 <div class="card-title">
                     <h4>Register for a free account</h4>
                 </div>   
-                <form action="{% url 'register' %}" method="post">
+                <form action="{% url 'register' %}" method="post" class="mt-5">
                     {% csrf_token %}
 
                     {% include "partials/_messages.html" %}
 
-                    <div class="form-group mt-2">
-                        <input 
-                            type="text" 
-                            name="username" 
-                            placeholder="username"
-                            id="usernameField" 
-                            class="form-control form-control-sm"
-                            value = "{{fieldValues.username}}"
-                            required
+                        <div class="form-group form-floating mt-2">
+                            <input 
+                                type="text" 
+                                name="username" 
+                                placeholder="username"
+                                id="usernameField" 
+                                class="form-control form-control-sm lowercase"
+                                maxlength="20"
+                                value = "{{fieldValues.username}}"
+                                required
                             />
+                            <label for="usernameField">Username</label>
                             <div class="invalid-username text-danger" style="display: none"></div>
                             <p class="text-sm text-success usernameSuccessOutput"></p>
-                            
-                            
                         </div>
-                        <div class="form-group mt-2">
+                        <div class="form-group form-floating mt-2">
                             <input 
-                            type="email" 
-                            name="email" 
-                            placeholder="example@gmail.com"
-                            id="emailField" 
-                            class="form-control form-control-sm"
-                            value = "{{fieldValues.email}}"
-                            required
+                                type="email" 
+                                name="email" 
+                                placeholder="example@gmail.com"
+                                id="emailField" 
+                                style="text-transform:lowercase;"
+                                class="form-control form-control-sm lowercase"
+                                value = "{{fieldValues.email}}"
+                                maxlength="50"
+                                required
                             />
+                            <label for="emailField">Email</label>
                         </div>
                         <div class="invalid-email text-danger" style="display: none"></div>
                         <p class="text-sm text-success emailSuccessOutput"></p>
-                        <div class="form-group mt-2">
+                        <div class="form-group form-floating  mt-2">
                             <input 
-                        type="password" 
-                        name="password" 
-                        placeholder="Password"
-                        id="passwordField" 
-                        class="form-control form-control-sm"
-                        value = ""
-                        required
-                        />
+                                type="password" 
+                                name="password" 
+                                placeholder="Password"
+                                id="passwordField" 
+                                class="form-control form-control-sm"
+                                value = "{{fieldValues.password}}"
+                                required
+                            />
+                            <label for="passwordField">Password</label>
+                        </div>      
                         <div class="text-end py-3"><small class="showPasswordToggle float-right btn btn-outline-info">Show</small></div>
-                    </div>      
                     <input type="submit" value="Register" class="btn btn-block btn-primary submit-button"/> 
                 </form>
+                <div class="mt-2">Already have an account? <a href="{% url 'login' %}"><span class="">Login</span></a></div>
             </div>    
         </div>
     </div>

@@ -22,3 +22,8 @@
 .showPasswordToggle:hover {
   transform: scale(1.2,1.2);
 }
+
+.lowercase{
+  text-transform: lowercase;
+
+}

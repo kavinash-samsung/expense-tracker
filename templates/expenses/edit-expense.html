@@ -6,7 +6,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb mt-2">
             <li class="breadcrumb-item"><a href="{% url 'expenses' %}">Expenses</a></li>
-            <li class="breadcrumb-item active" aria-current="page">My Expenses</li>
+            <li class="breadcrumb-item active" aria-current="page">Edit Expenses</li>
         </ol>
     </nav>
     <div class="card">
@@ -35,6 +35,13 @@
                 <div class="form-group  mt-2">
                     <label for="">Category</label>
                     <select class="form-control" name="category" id="">
+                        <option 
+                            selected
+                            name="category" 
+                            value="{{values.category}}"
+                        >
+                            {{values.category}}
+                        </option>
                         {% for category in categories %}
                         <option 
                             name="category" 
@@ -51,9 +58,11 @@
                         type="date" 
                         class="form-control form-control-sm" 
                         name="expense_date"
+                        value="{{values.date}}"
+                        
                     >
                 </div>
-                <input type="submit" value="Submit" class="btn btn-primary btn-primary-sm mt-2">
+                <input type="submit" value="Update" class="btn btn-primary btn-primary-sm mt-2">
             </form>
         </div>
     </div>

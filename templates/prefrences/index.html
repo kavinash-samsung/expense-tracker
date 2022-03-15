@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content  %}
+<!-- 
+<div class="card border-primary mt-5" style="max-width: 50rem;">
+    <div class="card-header">Prefrences</div>
+    <div class="card-body">
+      <h4 class="card-title">Light card title</h4>
+      <p class="card-text">
+        <div class="form-group">
+            <label for="exampleSelect1" class="form-label mt-4">Example select</label>
+            <select class="form-select" id="exampleSelect1">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </div>
+      </p>
+      <button type="button" class="btn btn-primary">Primary</button>
+    </div>
+</div> -->
+{% include 'partials/_messages.html' %}
+<div class="jumbotron mt-5">
+  <!-- <h1 class="display-4">Preffered Currency</h1> -->
+  <p class="lead">Change Your prefrence</p>
+  <!-- <hr class="my-4"> -->
+  <form action="{% url 'prefrences' %}" method="post">
+      {% csrf_token %}
+    <p>
+        <div class="form-group">
+            <label for="exampleSelect1" class="form-label mt-4">Example select</label>
+            <select name="currency" class="form-select" id="exampleSelect1">
+              {% for currency in currencies %}
+                <option value={{currency.name}}>{{currency.name}} - {{ currency.value }}</option>
+              {% endfor %}
+            </select>
+          </div>
+      </p>
+      <p class="lead">
+        <input type="submit" value="Save" class="btn btn-primary btn-lg"role="button"></input>
+      </p>
+  </form>
+</div>
+
+
+{% endblock content  %}
