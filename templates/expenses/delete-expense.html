@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <!-- {% include 'partials/_messages.html' %} -->
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mt-2">
+            <li class="breadcrumb-item"><a href="{% url 'expenses' %}">Expenses</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Delete Expenses</li>
+        </ol>
+    </nav>
+    {% include 'partials/_messages.html' %}
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <h1 for="">Are You sure You want to delete this expense</h1>
+    <table class="table table-stripped table-hover text-center">
+        <thead>
+            <tr>
+                <th>Amount (CURRENCY)</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Date</th>
+                
+                
+                <!-- <th></th> -->
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td>{{expense.amount}}</td>
+                <td>{{expense.category}}</td>
+                <td>{{expense.description}}</td>
+                <td>{{expense.date}}</td>
+                
+                <!-- <td>Delete</td> -->
+            </tr>
+            
+        </tbody>
+    </table>
+    
+                
+                <p></p>
+                <input type="submit" value="Delete this Expense" class="btn btn-primary btn-primary-sm mt-2">
+            </form>
+        </div>
+    </div>
+
+{% endblock content %}

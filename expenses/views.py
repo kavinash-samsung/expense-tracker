@@ -87,3 +87,14 @@ def edit_expense(request, id):
         messages.success(request, "Post form Updated")
         return render(request, 'expenses/edit-expense.html', context)
         
+def delete_expense(request, id):
+    expense = Expense.objects.get(pk=id)
+    context = {
+        'expense':expense,
+    }
+    if request.method == "POST":
+        expense.delete()
+        messages.success(request, 'Expense Deleted successfully')
+        return redirect("expenses")
+    else:
+        return render(request, 'expenses/delete-expense.html', context)

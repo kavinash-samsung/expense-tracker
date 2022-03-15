@@ -10,16 +10,17 @@
     </span>
 </nav>
 
-<div class="container-lg">
+<div class="container-lg ">
     {% if expenses.count %}
-    <table class="table table-stripped table-hover">
+    <table class="table table-stripped table-hover text-center">
         <thead>
             <tr>
                 <th>Amount (CURRENCY)</th>
                 <th>Category</th>
                 <th>Description</th>
                 <th>Date</th>
-                <th></th>
+                <th>Edit / Delete</th>
+                
                 <!-- <th></th> -->
             </tr>
         </thead>
@@ -30,7 +31,10 @@
                 <td>{{expense.category}}</td>
                 <td>{{expense.description}}</td>
                 <td>{{expense.date}}</td>
-                <td><a href="{% url 'edit-expenses' expense.id %}">Edit</a></td>
+                <td>
+                    <a class="px-1" href="{% url 'edit-expenses' expense.id %}">Edit</a>    
+                    <a class="px-1" href="{% url 'delete-expenses' expense.id %}">Delete</a>
+                </td>
                 <!-- <td>Delete</td> -->
             </tr>
             {% endfor %}
