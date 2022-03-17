@@ -58,13 +58,17 @@
                         type="date" 
                         class="form-control form-control-sm" 
                         name="expense_date"
-                        value="{{values.date}}"
+                        value="{{values.date | date:'Y-m-d'}}"
                         
                     >
                 </div>
                
-                <input type="submit" value="Update" class="btn btn-primary btn-primary-sm mt-2">
+                <div class="dflex space-between">
+                    <a href="{% url 'expenses' %}" class="btn btn-primary btn-primary-sm mt-2">Back</a>
+                <input type="submit" value="Update" class="btn btn-success btn-success-sm mt-2">
+                </div>
             </form>
+            
         </div>
     </div>
 

@@ -15,7 +15,7 @@
         <form method="post">
             {% csrf_token %}
             <h1 for="">Are You sure You want to delete this expense</h1>
-    <table class="table table-stripped table-hover text-center">
+    <table class="table table-stripped table-hover text-center mt-4">
         <thead>
             <tr>
                 <th>Amount (CURRENCY)</th>
@@ -33,17 +33,25 @@
                 <td>{{expense.amount}}</td>
                 <td>{{expense.category}}</td>
                 <td>{{expense.description}}</td>
-                <td>{{expense.date}}</td>
+                <td>{{expense.date|date:'Y-m-d'}}</td>
                 
                 <!-- <td>Delete</td> -->
             </tr>
-            
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                
+                <!-- <td>Delete</td> -->
+            </tr>
         </tbody>
     </table>
     
                 
                 <p></p>
-                <input type="submit" value="Delete this Expense" class="btn btn-primary btn-primary-sm mt-2">
+                <a href="{% url 'expenses' %}" class="btn btn-primary btn-primary-sm mt-2">Back</a>
+                <input type="submit" value="Yes" class="btn btn-danger btn-danger-sm mt-2">
             </form>
         </div>
     </div>

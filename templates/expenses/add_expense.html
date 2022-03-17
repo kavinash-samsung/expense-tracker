@@ -9,7 +9,7 @@
             <li class="breadcrumb-item active" aria-current="page">Add Expenses</li>
         </ol>
     </nav>
-    <div class="card">
+    <div class="card w-100">
         <div class="card-body">
             {% include 'partials/_messages.html' %}
             <form method="post">
@@ -53,7 +53,8 @@
                         name="expense_date"
                     >
                 </div>
-                <input type="submit" value="Submit" class="btn btn-primary btn-primary-sm mt-2">
+                <a href="{% url 'expenses' %}" class="btn btn-primary btn-primary-sm mt-2">Back</a>
+                <input type="submit" value="Submit" class="btn btn-success btn-success-sm mt-2">
             </form>
         </div>
     </div>

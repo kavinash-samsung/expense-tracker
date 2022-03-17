@@ -2,9 +2,13 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
 from .models import Category, Expense
+from userprefrences.models import UserPrefrences
+
 from django.contrib import messages
 
 from django.core.paginator import Paginator
+import json
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -15,10 +19,11 @@ def index(request):
     paginator = Paginator(expenses, 3)
     page_number = request.GET.get('page')
     page_obj = Paginator.get_page(paginator, page_number)
-
+    currency = UserPrefrences.objects.get(user = request.user).currency_name()
     context = {
         "expenses":expenses,
-        "page_obj":page_obj
+        "page_obj":page_obj,
+        "currency":currency,
     }
     return render(request, "expenses/index.html", context)
     
@@ -54,6 +59,7 @@ def add_expense(request):
         return redirect("expenses")
         return render(request, 'expenses/add_expense.html', context)
 
+@login_required(login_url="/authentication/login/")
 def edit_expense(request, id):
     expense = Expense.objects.get(pk=id)
     categories = Category.objects.all().exclude(name = expense.category)
@@ -86,7 +92,8 @@ def edit_expense(request, id):
         return redirect("expenses")
         messages.success(request, "Post form Updated")
         return render(request, 'expenses/edit-expense.html', context)
-        
+
+@login_required(login_url="/authentication/login/")       
 def delete_expense(request, id):
     expense = Expense.objects.get(pk=id)
     context = {
@@ -98,3 +105,19 @@ def delete_expense(request, id):
         return redirect("expenses")
     else:
         return render(request, 'expenses/delete-expense.html', context)
+
+# @login_required(login_url="/authentication/login/")
+def search_expenses(request):
+    if request.method == "POST":
+        search_str = json.loads(request.body).get("searchText")
+    
+        expenses = Expense.objects.filter(
+            amount__istartswith=search_str, owner=request.user) | Expense.objects.filter(
+            date__istartswith=search_str, owner=request.user) | Expense.objects.filter(
+            description__istartswith=search_str, owner=request.user) | Expense.objects.filter(
+            category__istartswith=search_str, owner=request.user)
+
+        data = expenses.values()
+        return JsonResponse(list(data), safe=False)
+
+
