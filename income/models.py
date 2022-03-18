@@ -11,7 +11,7 @@ class UserIncome(models.Model):
     source = models.CharField(max_length=266)
 
     def __str__(self):
-        return f"{self.amount} on {self.source} by {self.owner}"
+        return f" {self.owner} got {self.amount} via {self.source} "
     
     class Meta:
         ordering = ('-date',)

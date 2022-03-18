@@ -9,6 +9,11 @@ def send_email_to_newly_registered_user(username, user_email, activation_url):
     email_body = f"Hi {username}! Please verify your account Click here {activation_url}"
     send_mail(email_subject, email_body, "noreply@semicolon.com", [user_email],)
 
+def send_email_for_password_reset(user_email, password_reset_url):
+    email_subject = "Reset password of your account"
+    email_body = f"Hi there! To reset your password Click here {password_reset_url}"
+    send_mail(email_subject, email_body, "noreply@semicolon.com", [user_email],)
+
 
 
 class AppTokenGenerator(PasswordResetTokenGenerator):

@@ -19,7 +19,12 @@ def index(request):
     paginator = Paginator(expenses, 3)
     page_number = request.GET.get('page')
     page_obj = Paginator.get_page(paginator, page_number)
-    currency = UserPrefrences.objects.get(user = request.user).currency_name()
+    try:
+        currency = UserPrefrences.objects.get(user = request.user)
+    except:
+        currency = UserPrefrences.objects.create(user=request.user)
+    currency = currency.currency_name()
+    
     context = {
         "expenses":expenses,
         "page_obj":page_obj,
@@ -57,7 +62,6 @@ def add_expense(request):
         expense.save()
         messages.success(request, 'Expense added successfully')
         return redirect("expenses")
-        return render(request, 'expenses/add_expense.html', context)
 
 @login_required(login_url="/authentication/login/")
 def edit_expense(request, id):

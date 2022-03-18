@@ -51,8 +51,8 @@
                     <td>{{expense.description}}</td>
                     <td>{{expense.date|date:'Y-m-d'}}</td>
                     <td class="mx-2">
-                        <a class="btn btn-outline-success px-4 mt-2" href="{% url 'edit-expenses' expense.id %}">Edit</a>    
-                        <a class="btn btn-outline-danger px-3 mt-2" href="{% url 'delete-expenses' expense.id %}">Delete</a>
+                        <a class="btn btn-outline-success px-4 " href="{% url 'edit-expenses' expense.id %}">Edit</a>    
+                        <a class="btn btn-outline-danger px-3 " href="{% url 'delete-expenses' expense.id %}">Delete</a>
                     </td>
                     <!-- <td>Delete</td> -->
                 </tr>
@@ -60,6 +60,7 @@
             </tbody>
         </table>
     </div>
+    
     <div class="noElement mt-2">No Elements Found</div>
     <div class="table-output mt-2">
         <table class="table table-stripped table-hover text-center">
@@ -85,6 +86,7 @@
             <div class="col-md-6"></div>
             <div class="col-md-3 float-right">
                 <ul class="pagination align-right float-right mr-auto">
+                    
                     {% if page_obj.has_previous %}
                         <li {% if page_obj.number == "1" %} class="page-item active" {% endif %}>
                             <a class="page-link" href="?page=1">&laquo; 1</a>
@@ -100,8 +102,6 @@
                             <a class="page-link disabled " href="">Previous</a>
                         </li>
                     {% endif %}
-                    
-              
                     {% if page_obj.has_next %}
                         <li class="page-item"> 
                             <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
@@ -123,8 +123,14 @@
         </div>
         
     </div>   
-
-
+    {% else %}
+    <div class="card">
+        <div class="card-body">
+            <h2><div class="mt-2">No Expenses to show</div></h2>
+            <h5><p>Add from below button</p></h5>
+            <a href="{% url 'add-expenses' %}" class="btn btn-success btn-success-sm">Add Expense</a>
+        </div>
+    </div>
     {% endif %}
 
 </div>

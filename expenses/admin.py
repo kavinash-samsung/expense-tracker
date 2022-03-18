@@ -3,6 +3,13 @@ from .models import Expense, Category
 
 # Register your models here.
 
-admin.site.register(Expense)
+class ExpenseAdmin(admin.ModelAdmin):
+    list_display = ('amount',"description", "category", "date")
+    search_fields = ('amount',"description", "category", "date")
+
+    list_per_page = 5
+    
+
+admin.site.register(Expense, ExpenseAdmin)
 admin.site.register(Category)
 

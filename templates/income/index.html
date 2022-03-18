@@ -5,7 +5,7 @@
 <nav aria-label="breadcrumb d-flex flex-column" >
     <span class="breadcrumb mt-2 d-flex justify-content-between mt-2">
         <h1 class="mt-2 mb-2">Income List</h1>
-        <!-- <li class="breadcrumb-item">Expenses</li> -->
+        <!-- <li class="breadcrumb-item">Income</li> -->
        
     </span>
 </nav>
@@ -26,11 +26,11 @@
             </div>
         </div>
         <div class="col-md-2 text-center">
-            <a href="{% url 'add-expenses' %}" class="btn btn-success d-flex align-items-center px-4">Add Expenses</a>
+            <a href="{% url 'add-income' %}" class="btn btn-success d-flex align-items-center px-4">Add Income</a>
         </div>
     </div>
 
-    {% if expenses.count %}
+    {% if income.count %}
     <div class="app-table">
         <table class="table table-stripped table-hover text-center">
             <thead>
@@ -41,21 +41,21 @@
                     <th>Date</th>
                     <th>Edit / Delete</th>
                     
-                    <!-- <th></th> -->
+                   
                 </tr>
             </thead>
             <tbody>
-                {% for expense in page_obj %}
+                {% for income in page_obj %}
                 <tr>
-                    <td>{{expense.amount}}</td>
-                    <td>{{expense.category}}</td>
-                    <td>{{expense.description}}</td>
-                    <td>{{expense.date|date:'Y-m-d'}}</td>
+                    <td>{{income.amount}}</td>
+                    <td>{{income.source}}</td>
+                    <td>{{income.description}}</td>
+                    <td>{{income.date|date:'Y-m-d'}}</td>
                     <td class="mx-2">
-                        <a class="btn btn-outline-success px-4 mt-2" href="{% url 'edit-expenses' expense.id %}">Edit</a>    
-                        <a class="btn btn-outline-danger px-3 mt-2" href="{% url 'delete-expenses' expense.id %}">Delete</a>
+                        <a class="btn btn-outline-success px-4 " href="{% url 'edit-income' income.id %}">Edit</a>    
+                        <a class="btn btn-outline-danger px-3 " href="{% url 'delete-income' income.id %}">Delete</a>
                     </td>
-                    <!-- <td>Delete</td> -->
+                   
                 </tr>
                 {% endfor %}
             </tbody>
@@ -70,7 +70,7 @@
                     <th>Category</th>
                     <th>Description</th>
                     <th>Date</th>  
-                    <!-- <th></th> -->
+                   
                 </tr>
             </thead>
             <tbody class="table-body">
@@ -124,12 +124,19 @@
         </div>
         
     </div>   
-
+    {% else %}
+    <div class="card">
+        <div class="card-body">
+            <h2><div class="mt-2">No Income to show</div></h2>
+            <h5><p>Add from below button</p></h5>
+            <a href="{% url 'add-income' %}" class="btn btn-success btn-success-sm">Add Income</a>
+        </div>
+    </div>
 
     {% endif %}
 
 </div>
 
-<script src="{% static 'js/searchExpenses.js' %}">
+<script src="{% static 'js/searchIncome.js' %}">
 </script>
 {% endblock content %}
