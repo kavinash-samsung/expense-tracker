@@ -25,7 +25,7 @@
     <div class="nav-item text-nowrap d-flex">
       
       <div class="nav-link px-3">
-        <a href="" class="nav-link px-3 btn btn-info">Profile</a>
+        <a href="" class="nav-link px-3 btn btn-info" style="text-transform:capitalize">{{request.user}}</a>
       </div>
       <form action="{% url 'logout' %}" method="post" class="nav-link px-3">
         {% csrf_token %}

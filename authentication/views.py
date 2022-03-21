@@ -22,10 +22,7 @@ from django.contrib import auth
 
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
-import threading 
 
-class EmailThread(threading.Thread):
-    def __init__(self,)
 
 # Create your views here.
 def userAlreadyAuthenticated(user):
@@ -104,19 +101,27 @@ class LoginView(View):
         password = data["password"]
         if(username and password):
             user = auth.authenticate(username=username, password=password)
-            print(user)
+            try:
+                user = User.objects.get(email=username)
+                user = auth.authenticate(username=user.username, password=password)
+            except:
+                pass
             if user:
                 if user.is_active:
                     auth.login(request, user)
                     messages.success(request, f"Welcome! {user.username} You are now logged in")
                     return redirect('expenses')
-                else:
-                  messages.error(request, f"Account is not active. Please check your email.")
-                  return render(request, "authentication/login.html")
             else:
-                messages.error(request, f"Either your Credentials are wrong or")
-                messages.error(request, f"Maybe you haven't activated your account, Please check your mail and activate your account")
-                return render(request, "authentication/login.html")
+                try:
+                    user = User.objects.get(username = username)
+                    if user.is_active:
+                        messages.error(request, f"Your Credentials are wrong")
+                    else:
+                        messages.error(request, f"Account is not active. Please check your email and activate your account")
+                    return render(request, "authentication/login.html")
+                except:
+                    messages.error(request, f"User with username {username} does not exist! Please Register yourself first")
+                    return render(request, "authentication/login.html")
         messages.error(request, "Please fill all fields")
         return render(request, "authentication/login.html")
 
@@ -200,13 +205,13 @@ class CompletePasswordReset(View):
         try:
             user_id = force_str(urlsafe_base64_decode(uidb64)) 
             user = User.objects.get(pk = user_id)
-            if not PasswordResetTokenGenerator().check_token(user, token)
+            if not PasswordResetTokenGenerator().check_token(user, token):
                 messages.info(request, "Link Already used! Request new one here")
                 return render(request, 'authentication/reset-password.html',context)
-            user.set_password(password)
-            user.save()
-            messages.success(request, "Password reset successful")
-            return redirect("login")
+            
+            messages.info(request, "Set new password")
+            return render(request, 'authentication/set-new-password.html',context)
+        
         except:
             messages.info(request, "Something Went Wrong")
             return render(request, 'authentication/reset-password.html',context)

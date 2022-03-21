@@ -77,13 +77,13 @@ def edit_expense(request, id):
     if request.method == "POST":
         context["values"] = request.POST
 
-        amount = request.POST['amount']
+        amount = request.POST.get('amount')
         if amount:
             expense.amount = amount
 
-        description = request.POST['description']
+        description = request.POST.get('description')
         if description:
-            expense.category = description
+            expense.description = description
 
         category = request.POST['category']
         if category:
