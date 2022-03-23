@@ -59,7 +59,8 @@ class RegistrationView(View):
                 activation_url = "http://"+domain+link
                 send_email_to_newly_registered_user(username, email, activation_url)
                 user.save()
-                messages.success(request, "Account successfully created")
+                messages.success(request, "Account created! Activate your account")
+                messages.success(request, "Link for account activation is sended to you via mail")
                 return render(request, "authentication/login.html")
             else:
                 messages.error(request, "user with this email already exists")
@@ -101,11 +102,14 @@ class LoginView(View):
         password = data["password"]
         if(username and password):
             user = auth.authenticate(username=username, password=password)
-            try:
-                user = User.objects.get(email=username)
-                user = auth.authenticate(username=user.username, password=password)
-            except:
-                pass
+            print(f"Outside try block {username}")
+            if not user:
+                try:
+                    print(f"Inside try block {username}")
+                    user = User.objects.get(email=username)
+                    user = auth.authenticate(username=user.username, password=password)
+                except:
+                    pass
             if user:
                 if user.is_active:
                     auth.login(request, user)
@@ -113,7 +117,11 @@ class LoginView(View):
                     return redirect('expenses')
             else:
                 try:
-                    user = User.objects.get(username = username)
+                    try:
+                        user = User.objects.get(username = username)
+                    except:
+                        user = User.objects.get(email = username)
+                         
                     if user.is_active:
                         messages.error(request, f"Your Credentials are wrong")
                     else:
