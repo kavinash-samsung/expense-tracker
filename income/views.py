@@ -8,15 +8,16 @@ from django.contrib import messages
 
 from django.core.paginator import Paginator
 import json
-from django.http import JsonResponse
-
+from django.http import JsonResponse, HttpResponse
+import csv
+import datetime
 # Create your views here.
 
 @login_required(login_url="/authentication/login/")
 def index(request):
     sources = Source.objects.all()
     userIncome = UserIncome.objects.filter(owner=request.user)
-    paginator = Paginator(userIncome, 3)
+    paginator = Paginator(userIncome, 4)
     page_number = request.GET.get('page')
     page_obj = Paginator.get_page(paginator, page_number)
     currency = UserPrefrences.objects.get(user = request.user).currency_name()
@@ -119,5 +120,61 @@ def search_income(request):
 
         data = income.values()
         return JsonResponse(list(data), safe=False)
+
+@login_required(login_url="/authentication/login/")   
+def income_stats_view(request):
+    context = {}
+    return render(request, 'income/income-stats.html', context)
+
+def income_source_summary(request):
+    todays_date = datetime.date.today()
+    six_months_ago = todays_date - datetime.timedelta(days=180)
+    one_year_ago = todays_date - datetime.timedelta(days = 365)
+
+    income = UserIncome.objects.filter(owner=request.user, date__gte = six_months_ago, date__lte = todays_date)
+
+    def get_income(income):
+        return income.source
+    
+    source_list = list(set(map(get_income,  income)))
+    print("ok")
+
+    def get_income_source_amount(source):
+        amount = 0
+        print("OK")
+        filtered_by_source = income.filter(source=source)
+        print("OK")
+        print(filtered_by_source)
+        for item in filtered_by_source:
+            amount += item.amount
+        return amount
+
+    finalrep = {}
+    print("ok")
+    # for x in income:
+    for y in source_list:
+        print("asdfkjahsfklaj",y)
+        finalrep[y] = get_income_source_amount(y)
+    print("ok")
+    print(finalrep)
+    
+    return JsonResponse({'income_source_data': finalrep}, safe=False)
+
+def export_csv(request):
+    response = HttpResponse(content_type="/text/csv")
+    response['Content-Disposition'] = 'attachment: filename=Income'+\
+        str(datetime.datetime.now())+'.csv'
+    
+    writer = csv.writer(response)
+    writer.writerow(['Amount', "Description", "Source", "Date"])
+
+    income = UserIncome.objects.filter(owner=request.user)
+
+    for inc in income:
+        writer.writerow([inc.amount, inc.description, inc.source, inc.date])
+    
+    return response
+
+
 
 

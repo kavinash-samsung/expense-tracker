@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<nav aria-label="breadcrumb d-flex flex-column" >
+    <span class="breadcrumb mt-2 d-flex justify-content-between mt-2">
+        <div class="row">
+            <div class="col-md-2">
+                <!-- <a href="{% url 'add-income' %}" class="btn btn-success d-flex align-items-center px-4">Add Income</a> -->
+            </div>
+            <div class="col-md-8"></div>
+            <div class="col-md-2 text-center">
+                <!-- <a href="{% url 'add-expenses' %}" class="btn btn-success d-flex align-items-center px-4">Add Expenses</a> -->
+            </div>
+        </div>
+       
+    </span>
+</nav>
+<div class="row">
+    <div class="col-md-2 col-2">
+        <a href="{% url 'expenses' %}" class="btn btn-outline-dark d-flex align-items-center px-4">View Expenses</a>
+    </div>
+    <div class="col-md-2 col-2">
+        <a href="{% url 'add-expenses' %}" class="btn btn-outline-dark d-flex align-items-center px-4">Add Expenses</a>
+    </div>
+    <div class="col-md-4 col-4"></div>
+    <div class="col-md-2 col-2">
+        <a href="{% url 'income' %}" class="btn btn-outline-dark d-flex align-items-center px-4">View Income</a>
+    </div>
+    <div class="col-md-2 col-2 text-center">
+        <a href="{% url 'add-income' %}" class="btn btn-outline-dark d-flex align-items-center px-4">Add Income</a>
+    </div>
+</div>
+<div class="card" style="height: 100%;width: 100%;">
+    <div class="card-body">
+        {% include 'partials/_messages.html' %}
+        <div class="row">
+            <div class="col-6 col-sm-12 col-md-6" style="height: 50%;width: 50%;">
+                <div class="card">
+                    <div class="card-body">
+                        <canvas id="ExpenseChart" width="50" height="45"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-sm-12 col-md-6" style="height: 50%;width: 50%;">
+                <div class="card">
+                    <div class="card-body">
+                        <canvas id="IncomeChart" width="50" height="45"></canvas>
+                    </div>
+                </div> 
+            </div>
+        </div>        
+    </div>
+</div>
+<script src="{% static 'js/index.js' %}"></script>
+{% endblock content %}

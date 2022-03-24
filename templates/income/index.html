@@ -14,7 +14,15 @@
     {% include 'partials/_messages.html' %}
 
     <div class="row">
-        <div class="col-md-6"></div>
+        <div class="col-md-2">
+            <a href="" class="btn btn-outline-dark">Get PDF</a>
+        </div>
+        <div class="col-md-2">
+            <a href="" class="btn btn-outline-dark">Get Excel</a> 
+        </div>
+        <div class="col-md-2" class="btn btn-outline-dark">
+            <a href="{% url 'inc-export-csv' %}" class="btn btn-outline-dark">Export CSV</a>
+        </div>
         <div class="col-md-4">
             <div class="form-group">
                 <input 
@@ -36,7 +44,7 @@
             <thead>
                 <tr>
                     <th>Amount ({{currency}})</th>
-                    <th>Category</th>
+                    <th>Source</th>
                     <th>Description</th>
                     <th>Date</th>
                     <th>Edit / Delete</th>
@@ -67,9 +75,10 @@
             <thead>
                 <tr>
                     <th>Amount ({{currency}})</th>
-                    <th>Category</th>
+                    <th>Source</th>
                     <th>Description</th>
                     <th>Date</th>  
+                    <th>Edit/Delete</th>  
                    
                 </tr>
             </thead>
