@@ -14,16 +14,16 @@
     {% include 'partials/_messages.html' %}
 
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-2 col-2">
             <a href="" class="btn btn-outline-dark">Get PDF</a>
         </div>
-        <div class="col-md-2">
-            <a href="" class="btn btn-outline-dark">Get Excel</a> 
+        <div class="col-md-2 col-2">
+            <a href="" class="btn btn-outline-dark">Get xls</a> 
         </div>
-        <div class="col-md-2" class="btn btn-outline-dark">
-            <a href="{% url 'inc-export-csv' %}" class="btn btn-outline-dark">Export CSV</a>
+        <div class="col-md-2 col-2" class="btn btn-outline-dark">
+            <a href="{% url 'inc-export-csv' %}" class="btn btn-outline-dark">Get CSV</a>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 col-4">
             <div class="form-group">
                 <input 
                     type="text" 
@@ -33,8 +33,8 @@
                 >
             </div>
         </div>
-        <div class="col-md-2 text-center">
-            <a href="{% url 'add-income' %}" class="btn btn-success d-flex align-items-center px-4">Add Income</a>
+        <div class="col-md-2 col-2 text-center">
+            <a href="{% url 'add-income' %}" class="btn btn-success d-flex align-items-center px-2">Add Income</a>
         </div>
     </div>
 
