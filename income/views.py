@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
 from .models import Source, UserIncome
-from userprefrences.models import UserPrefrences
+from userprefrences.views import get_currency_name
 
 from django.contrib import messages
 
@@ -11,7 +11,10 @@ import json
 from django.http import JsonResponse, HttpResponse
 import csv, xlwt
 import datetime
+
+from helper.utils import html_to_pdf
 # Create your views here.
+
 
 @login_required(login_url="/authentication/login/")
 def index(request):
@@ -20,7 +23,8 @@ def index(request):
     paginator = Paginator(userIncome, 4)
     page_number = request.GET.get('page')
     page_obj = Paginator.get_page(paginator, page_number)
-    currency = UserPrefrences.objects.get(user = request.user).currency_name()
+
+    currency = get_currency_name(request.user)
     context = {
         "income":userIncome,
         "page_obj":page_obj,
@@ -206,6 +210,25 @@ def export_excel(request):
     wb.save(response)
 
     return response
+
+
+
+def export_pdf(request):
+    pdf_path = "income\pdf-output.html"
+    income = UserIncome.objects.filter(owner=request.user)
+    currency = currency = get_currency_name(request.user)
+    context = {
+        'income':income,
+        'currency':currency
+    }
+    pdf = html_to_pdf(pdf_path, context)
+    return HttpResponse(pdf, content_type="application/pdf")
+
+
+
+
+
+
 
 
 

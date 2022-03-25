@@ -16,8 +16,7 @@ class EmailThread(threading.Thread):
     def run(self):
         send_mail(self.email_subject, self.email_body, self.senderEmail, self.reciever_email_list)
 
-        
-
+   
 
 def send_email_to_newly_registered_user(username, user_email, activation_url):
     email_subject = "Activate Your Expense Tracker Account"

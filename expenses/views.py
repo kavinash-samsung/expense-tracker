@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
 from .models import Category, Expense
-from userprefrences.models import UserPrefrences
+from userprefrences.views import get_currency_name
 
 from django.contrib import messages
 
@@ -13,19 +13,10 @@ import xlwt
 from django.http import JsonResponse, HttpResponse
 import datetime
 
-from django.template.loader import render_to_string
-import tempfile
-
+from helper.utils import html_to_pdf
 
 # Create your views here.
 
-def get_currency_name(user):
-    try:
-        currency = UserPrefrences.objects.get(user = user)
-    except:
-        currency = UserPrefrences.objects.create(user=user)
-    currency = currency.currency_name()
-    return currency
 
 @login_required(login_url="/authentication/login/")
 def index(request):
@@ -222,23 +213,6 @@ def export_excel(request):
     wb.save(response)
 
     return response
-
-#converting to pdf and export
-
-from io import BytesIO
-from django.template.loader import get_template
-from xhtml2pdf import pisa
-
-
-def html_to_pdf(template_src, context={}):
-    template = get_template(template_src)
-    html = template.render(context)
-    result = BytesIO()
-    pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
-    if not pdf.err:
-        return HttpResponse(result.getvalue(), 
-        content_type="application/pdf")
-    return HttpResponse("Error Rendering PDF", status=400)
 
 
 def export_pdf(request):

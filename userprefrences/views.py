@@ -10,6 +10,14 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
+def get_currency_name(user):
+    try:
+        currency = UserPrefrences.objects.get(user = user)
+    except:
+        currency = UserPrefrences.objects.create(user=user)
+    currency = currency.currency_name()
+    return currency
+
 @login_required(login_url="/authentication/login/")
 def index(request):
     user_prefrences = UserPrefrences.objects.filter(user=request.user).exists()

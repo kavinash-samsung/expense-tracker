@@ -14,8 +14,9 @@ from django.utils.encoding import force_str, force_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 
 from django.urls import reverse
-from .utils import send_email_to_newly_registered_user, send_email_for_password_reset
-from .utils import token_generator
+
+from helper.utils import send_email_to_newly_registered_user, send_email_for_password_reset
+from helper.utils import token_generator
 
 #for login
 from django.contrib import auth
