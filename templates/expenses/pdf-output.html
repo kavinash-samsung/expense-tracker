@@ -1,0 +1,56 @@
+
+{% load static %}
+{% block content %}
+<nav aria-label="breadcrumb d-flex flex-column" >
+    <span class="breadcrumb mt-2 d-flex justify-content-between mt-2">
+        <h1 class="mt-2 mb-2">Expenses List</h1>
+
+    </span>
+</nav>
+
+<div class="container-lg ">
+
+    {% if expenses.count %}
+    <div class="app-table">
+        <table class="table table-striped table-hover text-center">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Amount ({{currency}})</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Date</th>
+                    
+                    
+                    <!-- <th></th> -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for expense in expenses %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{expense.amount}}</td>
+                    <td>{{expense.category}}</td>
+                    <td>{{expense.description}}</td>
+                    <td>{{expense.date|date:'Y-m-d'}}</td>
+                    
+                    <!-- <td>Delete</td> -->
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+  
+    {% else %}
+    <div class="card">
+        <div class="card-body">
+            <h2><div class="mt-2">No Expenses to show</div></h2>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+
+<script src="{% static 'js/searchExpenses.js' %}">
+</script>
+{% endblock content %}

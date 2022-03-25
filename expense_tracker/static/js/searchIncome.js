@@ -26,10 +26,13 @@ searchField.addEventListener('keyup', (e)=>{
             }else{
                 noElement.style.display = "none";
                 tableOutput.style.display = "block";
+                var counter = 0
                 data.forEach((item)=>{
+                    counter += 1
                     console.log(item);
                     tbody.innerHTML += `
                     <tr>
+                        <td scope="row">${ counter }</td>
                         <td>${item.amount}</td>
                         <td>${item.source}</td>
                         <td>${item.description}</td>

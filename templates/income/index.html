@@ -40,14 +40,15 @@
 
     {% if income.count %}
     <div class="app-table">
-        <table class="table table-stripped table-hover text-center">
+        <table class="table table-striped table-hover text-center">
             <thead>
                 <tr>
-                    <th>Amount ({{currency}})</th>
-                    <th>Source</th>
-                    <th>Description</th>
-                    <th>Date</th>
-                    <th>Edit / Delete</th>
+                    <th scope="col">#</th>
+                    <th scope="col">Amount ({{currency}})</th>
+                    <th scope="col">Source</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Edit / Delete</th>
                     
                    
                 </tr>
@@ -55,6 +56,7 @@
             <tbody>
                 {% for income in page_obj %}
                 <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
                     <td>{{income.amount}}</td>
                     <td>{{income.source}}</td>
                     <td>{{income.description}}</td>
@@ -71,7 +73,7 @@
     </div>
     <div class="noElement mt-2">No Elements Found</div>
     <div class="table-output mt-2">
-        <table class="table table-stripped table-hover text-center">
+        <table class="table table-striped table-hover text-center">
             <thead>
                 <tr>
                     <th>Amount ({{currency}})</th>

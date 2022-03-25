@@ -9,10 +9,23 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 import json
 import csv
-from django.http import JsonResponse, HttpResponse
 import xlwt
+from django.http import JsonResponse, HttpResponse
 import datetime
+
+from django.template.loader import render_to_string
+import tempfile
+
+
 # Create your views here.
+
+def get_currency_name(user):
+    try:
+        currency = UserPrefrences.objects.get(user = user)
+    except:
+        currency = UserPrefrences.objects.create(user=user)
+    currency = currency.currency_name()
+    return currency
 
 @login_required(login_url="/authentication/login/")
 def index(request):
@@ -21,11 +34,8 @@ def index(request):
     paginator = Paginator(expenses, 4)
     page_number = request.GET.get('page')
     page_obj = Paginator.get_page(paginator, page_number)
-    try:
-        currency = UserPrefrences.objects.get(user = request.user)
-    except:
-        currency = UserPrefrences.objects.create(user=request.user)
-    currency = currency.currency_name()
+    
+    currency = get_currency_name(request.user)
     
     context = {
         "expenses":expenses,
@@ -212,6 +222,35 @@ def export_excel(request):
     wb.save(response)
 
     return response
+
+#converting to pdf and export
+
+from io import BytesIO
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+
+
+def html_to_pdf(template_src, context={}):
+    template = get_template(template_src)
+    html = template.render(context)
+    result = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), 
+        content_type="application/pdf")
+    return HttpResponse("Error Rendering PDF", status=400)
+
+
+def export_pdf(request):
+    pdf_path = "expenses\pdf-output.html"
+    expenses = Expense.objects.filter(owner=request.user)
+    currency = currency = get_currency_name(request.user)
+    context = {
+        'expenses':expenses,
+        'currency':currency
+    }
+    pdf = html_to_pdf(pdf_path, context)
+    return HttpResponse(pdf, content_type="application/pdf")
 
 
 
