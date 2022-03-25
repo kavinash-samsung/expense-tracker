@@ -10,7 +10,7 @@ from django.core.paginator import Paginator
 import json
 import csv
 from django.http import JsonResponse, HttpResponse
-
+import xlwt
 import datetime
 # Create your views here.
 
@@ -180,6 +180,39 @@ def export_csv(request):
         writer.writerow([expense.amount, expense.description, expense.category, expense.date])
     
     return response
+
+def export_excel(request):
+    response = HttpResponse(content_type="application/ms-excel")
+    response['Content-Disposition'] = "attachment: filename=Expenses" + \
+        str(datetime.datetime.now())+'.xls'
+    
+    wb = xlwt.Workbook(encoding="utf-8")
+    ws = wb.add_sheet("Expenses")
+    
+    row_num = 0
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    columns = ['Amount', 'Description', 'Category', "Date"]
+
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], font_style)
+    
+    font_style = xlwt.XFStyle()
+
+    rows = Expense.objects.filter(owner=request.user).values_list(
+        'amount', 'description', 'category', 'date')
+    print(rows)
+ 
+    for row in rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, str(row[col_num]), font_style)
+    
+    wb.save(response)
+
+    return response
+
 
 
 

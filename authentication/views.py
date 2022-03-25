@@ -113,7 +113,7 @@ class LoginView(View):
             if user:
                 if user.is_active:
                     auth.login(request, user)
-                    messages.success(request, f"Welcome! {user.username} You are now logged in")
+                    messages.success(request, f"Welcome! {user.username.title()} You are now logged in")
                     return redirect('expenses')
             else:
                 try:

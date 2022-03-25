@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 import json
 from django.http import JsonResponse, HttpResponse
-import csv
+import csv, xlwt
 import datetime
 # Create your views here.
 
@@ -174,6 +174,39 @@ def export_csv(request):
         writer.writerow([inc.amount, inc.description, inc.source, inc.date])
     
     return response
+
+def export_excel(request):
+    response = HttpResponse(content_type="application/ms-excel")
+    response['Content-Disposition'] = "attachment: filename=Income" + \
+        str(datetime.datetime.now())+'.xls'
+    
+    wb = xlwt.Workbook(encoding="utf-8")
+    ws = wb.add_sheet("Income")
+    
+    row_num = 0
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    columns = ['Amount', 'Description', 'Source', "Date"]
+
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], font_style)
+    
+    font_style = xlwt.XFStyle()
+
+    rows = UserIncome.objects.filter(owner=request.user).values_list(
+        'amount', 'description', 'source', 'date')
+    print(rows)
+ 
+    for row in rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, str(row[col_num]), font_style)
+    
+    wb.save(response)
+
+    return response
+
 
 
 
