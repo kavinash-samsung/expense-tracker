@@ -216,7 +216,7 @@ def export_excel(request):
 
 
 def export_pdf(request):
-    pdf_path = "expenses\pdf-output.html"
+    pdf_path = "pdfs\expenses-pdf.html"
     expenses = Expense.objects.filter(owner=request.user)
     currency = currency = get_currency_name(request.user)
     context = {

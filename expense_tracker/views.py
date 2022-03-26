@@ -10,7 +10,7 @@ def home(request):
 
 
 def summary_pdf(request):
-    pdf_path = "summary-pdf.html"
+    pdf_path = "pdfs/summary-pdf.html"
     income = UserIncome.objects.filter(owner=request.user)
     expense = Expense.objects.filter(owner=request.user)
     currency = currency = get_currency_name(request.user)
