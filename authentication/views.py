@@ -13,15 +13,24 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_str, force_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 
+from django.contrib.auth.decorators import login_required
+
 from django.urls import reverse
 
 from helper.utils import send_email_to_newly_registered_user, send_email_for_password_reset
 from helper.utils import token_generator
+from helper.utils import stats_till_today
 
 #for login
 from django.contrib import auth
 
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
+
+
+from expenses.models import Expense
+from income.models import UserIncome
+
+from userprefrences.views import get_currency_name
 
 
 
@@ -94,7 +103,7 @@ class VerificationView(View):
 class LoginView(View):
     def get(self, request):
         if userAlreadyAuthenticated(request.user):
-            return redirect("expenses")
+            return redirect("home")
         return render(request, "authentication/login.html")
 
     def post(self, request):
@@ -115,7 +124,7 @@ class LoginView(View):
                 if user.is_active:
                     auth.login(request, user)
                     messages.success(request, f"Welcome! {user.username.title()} You are now logged in")
-                    return redirect('expenses')
+                    return redirect('home')
             else:
                 try:
                     try:
@@ -250,6 +259,14 @@ class CompletePasswordReset(View):
             messages.info(request, "Something went wrong, Try Again")
             return render(request, 'authentication/set-new-password.html',context)
     
-
+@login_required(login_url="/authentication/login/")
 def account_view(request):
-    return render(request, 'authentication/account.html')
+    UserExpense = stats_till_today(Expense, request.user)
+    Userincome = stats_till_today(UserIncome, request.user)
+    UserCurrency = get_currency_name(request.user)
+    context = {
+        "UserExpense":UserExpense,
+        "UserIncome":Userincome,
+        "UserCurrency":UserCurrency
+    }
+    return render(request, 'authentication/account.html', context)

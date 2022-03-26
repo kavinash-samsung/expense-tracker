@@ -3,21 +3,102 @@
 {% block content  %}
 
 
-<div class="card" style="height: 100%;width: 100%;">
+<div class="card border-dark mb-3" style="height: 100%;width: 100%;">
   <div class="card-body">
       {% include 'partials/_messages.html' %}
+      <h1>Accounts Page</h1>
       <div class="row">
           <div class="col-6 col-sm-12 col-md-6" style="height: 50%;width: 50%;">
-              <div class="card">
+              <div class="card border-success mb-3">
                   <div class="card-body">
-                      card 1
+                    <div class="row">
+                      <div class="col-md-6 col-6 col-lg-6">
+                        <h5>Total Expense</h5>
+                      </div>
+                      <div class="col-md-6 col-6 col-lg-6">
+                        <h5>{{ UserExpense }}</h5>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-7 col-7 col-lg-7">
+                        <h5></h5>
+                      </div>
+                      <div class="col-md-5 col-5 col-lg-5">
+                        <h5></h5>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-7 col-7 col-lg-7">
+                        <h5></h5>
+                      </div>
+                      <div class="col-md-5 col-5 col-lg-5">
+                        <h5></h5>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 col-6 col-lg-6">
+                        <h5>Total Income</h5>
+                      </div>
+                      <div class="col-md-6 col-6 col-lg-6">
+                        <h5>{{ UserIncome }}</h5>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-7 col-7 col-lg-7">
+                        <h5></h5>
+                      </div>
+                      <div class="col-md-5 col-5 col-lg-5">
+                        <h5></h5>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-7 col-7 col-lg-7">
+                        <h5></h5>
+                      </div>
+                      <div class="col-md-5 col-5 col-lg-5">
+                        <h5></h5>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 col-6 col-lg-6">
+                        <h5>Preffered Currency</h5>
+                      </div>
+                      <div class="col-md-5 col-5 col-lg-5">
+                        <h5>{{ UserCurrency }}</h5>
+                      </div>
+                    </div>
+                    
                   </div>
               </div>
           </div>
           <div class="col-6 col-sm-12 col-md-6" style="height: 50%;width: 50%;">
-              <div class="card">
+              <div class="card border-success mb-3">
                   <div class="card-body">
-                      card 2
+                      <div class="row">
+                        <div class="col-md-6 col-6 col-lg-6">
+                          <h3>Username</h3>
+                        </div>
+                        <div class="col-md-6 col-6 col-lg-6">
+                          <h3>{{ request.user }}</h3>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6 col-6 col-lg-6">
+                          <h3>Email</h3>
+                        </div>
+                        <div class="col-md-6 col-6 col-lg-6">
+                          <h3>{{ request.user }}</h3>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6 col-6 col-lg-6">
+                          <h3>Password</h3>
+                        </div>
+                        <div class="col-md-6 col-6 col-lg-6">
+                          <h3><a class="btn btn-outline-info  btn-lg" href="{% url 'request-password' %}">Change</a></h3>
+                        </div>
+                      </div>
+                      
                   </div>
               </div> 
           </div>
