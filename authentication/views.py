@@ -211,7 +211,6 @@ class requestPasswordResetEmail(View):
             return render(request, 'authentication/reset-password.html')
 
     
-
 class CompletePasswordReset(View):
     def get(self, request, uidb64, token):
         
@@ -259,6 +258,7 @@ class CompletePasswordReset(View):
             messages.info(request, "Something went wrong, Try Again")
             return render(request, 'authentication/set-new-password.html',context)
     
+
 @login_required(login_url="/authentication/login/")
 def account_view(request):
     UserExpense = stats_till_today(Expense, request.user)
