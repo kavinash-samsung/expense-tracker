@@ -264,9 +264,11 @@ def account_view(request):
     UserExpense = stats_till_today(Expense, request.user)
     Userincome = stats_till_today(UserIncome, request.user)
     UserCurrency = get_currency_name(request.user)
+    UserEmail = request.user.email
     context = {
         "UserExpense":UserExpense,
         "UserIncome":Userincome,
-        "UserCurrency":UserCurrency
+        "UserCurrency":UserCurrency,
+        "userEmail": UserEmail,
     }
     return render(request, 'authentication/account.html', context)

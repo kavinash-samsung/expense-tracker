@@ -75,27 +75,27 @@
               <div class="card border-success mb-3">
                   <div class="card-body">
                       <div class="row">
-                        <div class="col-md-6 col-6 col-lg-6">
-                          <h3>Username</h3>
+                        <div class="col-md-5 col-5 col-lg-5">
+                          <h4>Username</h4>
                         </div>
-                        <div class="col-md-6 col-6 col-lg-6">
-                          <h3>{{ request.user }}</h3>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6 col-6 col-lg-6">
-                          <h3>Email</h3>
-                        </div>
-                        <div class="col-md-6 col-6 col-lg-6">
-                          <h3>{{ request.user }}</h3>
+                        <div class="col-md-7 col-7 col-lg-7">
+                          <h4>{{ request.user }}</h4>
                         </div>
                       </div>
                       <div class="row">
-                        <div class="col-md-6 col-6 col-lg-6">
-                          <h3>Password</h3>
+                        <div class="col-md-5 col-5 col-lg-5">
+                          <h4>Email</h4>
                         </div>
-                        <div class="col-md-6 col-6 col-lg-6">
-                          <h3><a class="btn btn-outline-info  btn-lg" href="{% url 'request-password' %}">Change</a></h3>
+                        <div class="col-md-7 col-7 col-lg-7">
+                          <h4>{{ userEmail }}</h4>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-5 col-5 col-lg-5">
+                          <h4>Password</h4>
+                        </div>
+                        <div class="col-md-7 col-7 col-lg-7">
+                          <h4><a class="btn btn-outline-info  btn-lg" href="{% url 'request-password' %}">Change</a></h4>
                         </div>
                       </div>
                       

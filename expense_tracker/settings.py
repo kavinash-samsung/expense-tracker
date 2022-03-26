@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
+#import dotenv to use the environment variables inside django application
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -28,7 +29,7 @@ SECRET_KEY = 'django-insecure-f#cs$w)3y!9dqq=)6+x9q_7ebk)!ipw7^ctv$4c0#(=c1v(fq3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -123,6 +124,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
+# We need to provide the static path so that django templates can call them directly using static variable
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'expense_tracker/static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
@@ -132,9 +134,15 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+# by deafault for messages we have error as error
+# but to make it understand to bootstrap we chnged message.error to message.danger to get its danger effect
 MESSAGE_TAGS = {
     messages.ERROR :'danger',
 }
+
+# Followings are the necessary detail you need to provide to django 
+# so that django can send mail with it out of the box feature 
 
 #send email via django
 EMAIL_HOST_BACKEND = os.getenv("EMAIL_HOST_BACKEND")
@@ -142,5 +150,4 @@ EMAIL_HOST = os.getenv("EMAIL_HOST")
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
-
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")

@@ -233,9 +233,11 @@ def export_pdf(request):
     pdf_path = "pdfs\expenses-pdf.html"
     expenses = Expense.objects.filter(owner=request.user)
     currency = currency = get_currency_name(request.user)
+    total_expense = stats_till_today(Expense, request.user)
     context = {
         'expenses':expenses,
-        'currency':currency
+        'currency':currency,
+        'total_expense':total_expense,
     }
     pdf = html_to_pdf(pdf_path, context)
     return HttpResponse(pdf, content_type="application/pdf")
