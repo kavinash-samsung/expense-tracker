@@ -13,7 +13,7 @@ import xlwt
 from django.http import JsonResponse, HttpResponse
 import datetime
 
-from helper.utils import html_to_pdf
+from helper.utils import html_to_pdf, stats_till_today
 
 # Create your views here.
 
@@ -128,8 +128,22 @@ def search_expenses(request):
         return JsonResponse(list(data), safe=False)
 @login_required(login_url="/authentication/login/")
 def expense_stats_view(request):
-    context = {}
+    last_six_month_expense = stats_till_today(Expense, request.user, 180)
+    
+    last_one_year_expense = stats_till_today(Expense, request.user, 365)
+
+    last_one_month_expense = stats_till_today(Expense, request.user, 30)
+
+    all_time_expense = stats_till_today(Expense, request.user)
+
+    context = {
+        'last_six_month_expense':last_six_month_expense,
+        'last_one_year_expense':last_one_year_expense,
+        "last_one_month_expense":last_one_month_expense,
+        'all_time_expense':all_time_expense,
+    }
     return render(request, 'expenses/expense-stats.html', context)
+
 
 def expense_category_summary(request):
     todays_date = datetime.date.today()

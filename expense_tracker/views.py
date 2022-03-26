@@ -1,12 +1,29 @@
 from expenses.models import Expense
 from income.models import UserIncome
 from userprefrences.views import get_currency_name
-from helper.utils import html_to_pdf
+from helper.utils import html_to_pdf, stats_till_today
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
+
+@login_required(login_url="/authentication/login/")
 def home(request):
-    return render(request, "index.html")
+    
+    last_six_month_expense = stats_till_today(Expense, request.user, 180)
+    last_one_month_expense = stats_till_today(Expense, request.user, 30)
+
+    last_six_month_income = stats_till_today(UserIncome, request.user, 180)
+    last_one_month_income = stats_till_today(UserIncome, request.user, 30)
+
+    context = {
+        'last_six_month_expense':last_six_month_expense,
+        'last_one_month_expense':last_one_month_expense,
+        'last_six_month_income':last_six_month_income,
+        'last_one_month_income':last_one_month_income
+    }
+
+    return render(request, "index.html", context)
 
 
 def summary_pdf(request):

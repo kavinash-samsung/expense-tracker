@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content  %}
+
+
+<div class="card" style="height: 100%;width: 100%;">
+  <div class="card-body">
+      {% include 'partials/_messages.html' %}
+      <div class="row">
+          <div class="col-6 col-sm-12 col-md-6" style="height: 50%;width: 50%;">
+              <div class="card">
+                  <div class="card-body">
+                      card 1
+                  </div>
+              </div>
+          </div>
+          <div class="col-6 col-sm-12 col-md-6" style="height: 50%;width: 50%;">
+              <div class="card">
+                  <div class="card-body">
+                      card 2
+                  </div>
+              </div> 
+          </div>
+      </div>        
+  </div>
+</div>
+
+
+{% endblock content  %}

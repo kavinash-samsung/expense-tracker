@@ -49,7 +49,7 @@
     <div class="nav-item text-nowrap d-flex">
       
       <div class="nav-link px-3">
-        <a href="" class="nav-link px-3 btn btn-info" style="text-transform:capitalize">{{request.user}}</a>
+        <div href="" class="nav-link px-3 " style="text-transform:capitalize">{{request.user}}</div>
       </div>
       <form action="{% url 'logout' %}" method="post" class="nav-link px-3">
         {% csrf_token %}
@@ -77,6 +77,10 @@
     <script src="/docs/5.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
       <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
+      <script src="https://bootswatch.com/_vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="{% static 'js/jquery.min.js' %}"></script>
+      <script src="{% static 'js/prism.js' %}"></script>
+      <script src="{% static 'js/custom.js' %}"></script>
       <script src="{% static 'js/main.js' %}"></script>
   </body>
 </html>

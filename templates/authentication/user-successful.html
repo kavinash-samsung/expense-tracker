@@ -1,0 +1,26 @@
+{% extends 'base_auth.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class="row w-100">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 mt-5">
+        <div class="card">
+            <div class="card-body"> 
+                {% include "partials/_messages.html" %}
+                <div class="card-title">
+                    <h3>Account activation link is sent to your mail id</h3>
+                    <h4>Activate your account via clicking on the link or copy paste the link in browser</h4>
+                    <br>
+                    <h5>After Activation </h5>
+                </div>   
+                <br><br>
+                <div class="mt-2"><h5>Login To Your Account <a href="{% url 'login' %}"><span class="">Login</span></a></h5></div>
+            </div>    
+        </div>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+<script src="{% static 'js/register.js' %}"></script>
+{% endblock content %}

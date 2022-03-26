@@ -11,12 +11,91 @@
     {% include 'partials/_messages.html' %}
 
     <div class="row">
-        <div class=" col-md-11 col-9"></div>
-        <div class="col-md-1  col-1 text-center">
-            
-        </div>
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                  Last 6 Months
+                </button>
+              </h2>
+              <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
+                <div class="accordion-body">
+                    <figure>
+                        <blockquote class="blockquote">
+                          <p class="mb-0">
+                            <div class="row">
+                                <div class="col-md-12 col-12 col-lg-12"><cite title="Source Title">Expense - {{ last_six_month_expense }}</cite></div>
+                            </div>
+                          </p>
+                        
+                        </blockquote>
+                        <!-- <figcaption class="blockquote-footer">
+                          Someone famous in <cite title="Source Title">Source Title</cite>
+                        </figcaption> -->
+                      </figure>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  Last 1 Month
+                </button>
+              </h2>
+              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample" style="">
+                <div class="accordion-body">
+                    <figure>
+                        <blockquote class="blockquote">
+                          <p class="mb-0">
+                            <div class="row">
+                                <div class="col-md-12 col-12 col-lg-12"><cite title="Source Title">Expense - {{ last_one_month_expense }}</cite></div>
+                            </div>
+                          </p>
+                        
+                        </blockquote>
+                        <!-- <figcaption class="blockquote-footer">
+                          Someone famous in <cite title="Source Title">Source Title</cite>
+                        </figcaption> -->
+                      </figure>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  Last 1 Year Expense
+                </button>
+              </h2>
+              <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample" style="">
+                <div class="accordion-body">
+                    <figure>
+                        <blockquote class="blockquote">
+                          <p class="mb-0">
+                            <div class="row">
+                                <div class="col-md-12 col-12 col-lg-12"><cite title="Source Title">Expense - {{ last_one_year_expense }}</cite></div>
+                            </div>
+                          </p>
+                        
+                        </blockquote>
+                        <!-- <figcaption class="blockquote-footer">
+                          Someone famous in <cite title="Source Title">Source Title</cite>
+                        </figcaption> -->
+                      </figure>
+                </div>
+              </div>
+            </div>
     </div>
-    
+    <figure>
+        <blockquote class="blockquote">
+          <p class="mb-0">
+            <div class="row">
+                <div class="col-md-12 col-12 col-lg-12">Below Chart Shows stats of <cite title="Source Title">Last 6 months</cite></div>
+            </div>
+          </p>
+        
+        </blockquote>
+
+
     <div style="height: 45%;width: 100%;">
         <canvas id="myChart" width="100" height="45"></canvas>
     </div>

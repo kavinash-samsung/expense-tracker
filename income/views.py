@@ -12,7 +12,7 @@ from django.http import JsonResponse, HttpResponse
 import csv, xlwt
 import datetime
 
-from helper.utils import html_to_pdf
+from helper.utils import html_to_pdf, stats_till_today
 # Create your views here.
 
 
@@ -127,7 +127,21 @@ def search_income(request):
 
 @login_required(login_url="/authentication/login/")   
 def income_stats_view(request):
-    context = {}
+    
+    last_six_month_income = stats_till_today(UserIncome, request.user, 180)
+    
+    last_one_year_income = stats_till_today(UserIncome, request.user, 365)
+
+    last_one_month_income = stats_till_today(UserIncome, request.user, 30)
+
+    all_time_income = stats_till_today(UserIncome, request.user)
+
+    context = {
+        'last_six_month_income':last_six_month_income,
+        'last_one_year_income':last_one_year_income,
+        'last_one_month_income':last_one_month_income,
+        'all_time_income':all_time_income,
+    }
     return render(request, 'income/income-stats.html', context)
 
 def income_source_summary(request):
@@ -141,26 +155,23 @@ def income_source_summary(request):
         return income.source
     
     source_list = list(set(map(get_income,  income)))
-    print("ok")
+    
 
     def get_income_source_amount(source):
         amount = 0
-        print("OK")
+      
         filtered_by_source = income.filter(source=source)
-        print("OK")
+      
         print(filtered_by_source)
         for item in filtered_by_source:
             amount += item.amount
         return amount
 
     finalrep = {}
-    print("ok")
-    # for x in income:
+
     for y in source_list:
         print("asdfkjahsfklaj",y)
         finalrep[y] = get_income_source_amount(y)
-    print("ok")
-    print(finalrep)
     
     return JsonResponse({'income_source_data': finalrep}, safe=False)
 

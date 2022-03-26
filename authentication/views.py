@@ -62,7 +62,7 @@ class RegistrationView(View):
                 user.save()
                 messages.success(request, "Account created! Activate your account")
                 messages.success(request, "Link for account activation is sended to you via mail")
-                return render(request, "authentication/login.html")
+                return render(request, "authentication/user-successful.html")
             else:
                 messages.error(request, "user with this email already exists")
         else:
@@ -205,8 +205,7 @@ class requestPasswordResetEmail(View):
 
 class CompletePasswordReset(View):
     def get(self, request, uidb64, token):
-        if userAlreadyAuthenticated(request.user):
-            return redirect("expenses")
+        
         context = {
             "uuid64": uidb64,
             "token": token,
@@ -251,3 +250,6 @@ class CompletePasswordReset(View):
             messages.info(request, "Something went wrong, Try Again")
             return render(request, 'authentication/set-new-password.html',context)
     
+
+def account_view(request):
+    return render(request, 'authentication/account.html')
