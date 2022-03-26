@@ -30,7 +30,7 @@ def index(request):
         "page_obj":page_obj,
         "currency":currency,
     }
-    return render(request, "income/index.html", context)
+    return render(request, "income/inc-index.html", context)
     
 @login_required(login_url="/authentication/login/")
 def add_income(request):
