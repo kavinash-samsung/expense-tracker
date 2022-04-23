@@ -103,11 +103,10 @@ OR
 
 LOGIN via superuser you created
 
-If Your Liked this project 
-
-Give it a Star
-
-Thanks
+- If Your Liked this project 
+- Give it a Star
+    
+### Thanks
   
 
   
